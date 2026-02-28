@@ -220,16 +220,8 @@ jobs:
           
           # 执行最终拼接好的命令
           echo "🚀 执行命令: $CMD"
-          eval $CMD
-          
-          # 执行分析
-          if [ "$MODE" = "market-only" ]; then
-            python main.py --market-review
-          elif [ "$MODE" = "stocks-only" ]; then
-            python main.py --no-market-review
-          else
-            python main.py
-          fi
+          eval $CMD         
+         
       
       - name: 上传分析报告
         uses: actions/upload-artifact@v4
