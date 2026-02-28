@@ -173,9 +173,11 @@ jobs:
            # 获取强制运行参数 (如果是 true，则添加 --force-run)
           if ${{ github.event.inputs.force_run }}; then
             FORCE_PARAM="--force-run"
+            echo "⚡ 强制运行已启用: $FORCE_PARAM"
           else
             FORCE_PARAM=""
-            
+          fi
+          
           echo "=========================================="
           echo "🚀 A股自选股智能分析系统"
           echo "=========================================="
