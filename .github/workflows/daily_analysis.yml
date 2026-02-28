@@ -17,7 +17,11 @@ on:
           - full          # 完整分析（股票+大盘）
           - market-only   # 仅大盘复盘
           - stocks-only   # 仅股票分析
-
+    force_run:
+        description: '强制运行（忽略交易日检查）'
+        required: false
+        default: false
+        type: boolean
 # 并发控制：同一时间只运行一个分析任务
 concurrency:
   group: stock-analysis
@@ -50,7 +54,11 @@ jobs:
       - name: 创建必要目录
         run: |
           mkdir -p data logs reports
-      
+           # 判断运行模式
+          MODE="${{ github.event.inputs.mode || 'full' }}"
+          # 👇 判断是否勾选了 "force_run"
+          FORCE_RUN="${{ github.event.inputs.force_run && 'true' || 'false' }}"
+              
       - name: 执行股票分析
         env:
           # ==========================================
