@@ -17,7 +17,7 @@ on:
           - full          # 完整分析（股票+大盘）
           - market-only   # 仅大盘复盘
           - stocks-only   # 仅股票分析
-    force_run:
+      force_run:
         description: '强制运行（忽略交易日检查）'
         required: false
         default: false
@@ -54,10 +54,7 @@ jobs:
       - name: 创建必要目录
         run: |
           mkdir -p data logs reports
-           # 判断运行模式
-          MODE="${{ github.event.inputs.mode || 'full' }}"
-          # 👇 判断是否勾选了 "force_run"
-          FORCE_RUN="${{ github.event.inputs.force_run && 'true' || 'false' }}"
+          
               
       - name: 执行股票分析
         env:
@@ -173,7 +170,12 @@ jobs:
         run: |
           # 判断运行模式
           MODE="${{ github.event.inputs.mode || 'full' }}"
-          
+           # 获取强制运行参数 (如果是 true，则添加 --force-run)
+          if ${{ github.event.inputs.force_run }}; then
+            FORCE_PARAM="--force-run"
+          else
+            FORCE_PARAM=""
+            
           echo "=========================================="
           echo "🚀 A股自选股智能分析系统"
           echo "=========================================="
