@@ -209,6 +209,19 @@ jobs:
           echo "=========================================="
           echo ""
           
+          # 👇 构建最终命令：将 $FORCE_PARAM 加入命令
+          CMD="python main.py $FORCE_PARAM"
+          # 根据 MODE 添加其他参数
+          if [ "$MODE" = "market-only" ]; then
+            CMD="$CMD --market-review"
+          elif [ "$MODE" = "stocks-only" ]; then
+            CMD="$CMD --no-market-review"
+          fi
+          
+          # 执行最终拼接好的命令
+          echo "🚀 执行命令: $CMD"
+          eval $CMD
+          
           # 执行分析
           if [ "$MODE" = "market-only" ]; then
             python main.py --market-review
