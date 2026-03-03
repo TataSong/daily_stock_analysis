@@ -170,8 +170,9 @@ jobs:
         run: |
           # 判断运行模式
           MODE="${{ github.event.inputs.mode || 'full' }}"
+          
            # 获取强制运行参数 (如果是 true，则添加 --force-run)
-          if ${{ github.event.inputs.force_run }}; then
+          if [[ "${{ github.event.inputs.force_run }}" == "true" ]]; then
             FORCE_PARAM="--force-run"
             echo "⚡ 强制运行已启用: $FORCE_PARAM"
           else
